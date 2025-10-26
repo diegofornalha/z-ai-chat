@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - Z.AI Chat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .config-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px 12px 0 0;
+        }
+        .config-header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        .config-header p {
+            margin: 0.5rem 0 0 0;
+            opacity: 0.9;
+        }
+        .config-section {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .config-section:last-child {
+            border-bottom: none;
+        }
+        .config-section h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .stat-card {
+            background: var(--bg-hover);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .limit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .limit-table th,
+        .limit-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .limit-table th {
+            background: var(--bg-hover);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .history-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+        .history-btn:hover {
+            background: var(--bg-hover);
+        }
+        .history-btn.danger {
+            color: #dc2626;
+        }
+        .history-btn.danger:hover {
+            background: #fee2e2;
+        }
+    </style>
+</head>
+<body style="overflow-y: auto;">
+    <div class="container" style="overflow-y: visible; height: auto;">
+        <div class="chat-container" style="overflow-y: auto; max-height: none; height: auto;">
+            <div class="config-header">
+                <h1>⚙️ Configurações</h1>
+                <p>Estatísticas e gerenciamento de dados</p>
+            </div>
+
+            <!-- Estatísticas -->
+            <div class="config-section">
+                <h2>📊 Estatísticas de Uso</h2>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total de Conversas</div>
+                        <div class="stat-value" id="total-conversations">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total de Mensagens</div>
+                        <div class="stat-value" id="total-messages">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Armazenamento -->
+            <div class="config-section">
+                <h2>💾 Armazenamento de Dados</h2>
+
+                <table class="limit-table">
+                    <tbody>
+                        <tr>
+                            <td><strong>Localização</strong></td>
+                            <td>localStorage (navegador)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Conversa Atual</strong></td>
+                            <td><code>claude_chat_history_v1</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Histórico de Conversas</strong></td>
+                            <td><code>chat_conversations_history</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Privacidade</strong></td>
+                            <td>✅ Dados ficam apenas no seu navegador</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sincronização</strong></td>
+                            <td>❌ Não sincroniza entre dispositivos</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                    <button class="history-btn" onclick="exportHistory()">
+                        📥 Exportar Histórico
+                    </button>
+                    <button class="history-btn danger" onclick="clearAllData()">
+                        🗑️ Limpar Todos os Dados
+                    </button>
+                </div>
+            </div>
+
+            <!-- Links -->
+            <div class="config-section">
+                <h2>🔗 Links Úteis</h2>
+
+                <div style="display: grid; gap: 0.75rem;">
+                    <a href="index.html" style="padding: 0.75rem; background: var(--bg-hover); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+                        <span>💬</span>
+                        <span>Voltar ao Chat</span>
+                    </a>
+                    <a href="history.html" style="padding: 0.75rem; background: var(--bg-hover); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+                        <span>📁</span>
+                        <span>Ver Histórico de Conversas</span>
+                    </a>
+                    <a href="https://docs.z.ai/guides/overview/pricing" target="_blank" style="padding: 0.75rem; background: var(--bg-hover); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+                        <span>📄</span>
+                        <span>Documentação Z.AI</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CONVERSATIONS_KEY = 'chat_conversations_history';
+
+        function loadStats() {
+            try {
+                const stored = localStorage.getItem(CONVERSATIONS_KEY);
+                const conversations = stored ? JSON.parse(stored) : [];
+
+                const totalConversations = conversations.length;
+                const totalMessages = conversations.reduce((sum, conv) => {
+                    return sum + (conv.messages?.length || 0);
+                }, 0);
+
+                document.getElementById('total-conversations').textContent = totalConversations;
+                document.getElementById('total-messages').textContent = totalMessages;
+
+                console.log('📊 Stats:', { totalConversations, totalMessages });
+            } catch (err) {
+                console.error('Erro ao carregar stats:', err);
+                document.getElementById('total-conversations').textContent = '0';
+                document.getElementById('total-messages').textContent = '0';
+            }
+        }
+
+        function exportHistory() {
+            try {
+                const stored = localStorage.getItem(CONVERSATIONS_KEY);
+                if (!stored) {
+                    alert('Nenhum histórico para exportar!');
+                    return;
+                }
+
+                const conversations = JSON.parse(stored);
+                const dataStr = JSON.stringify(conversations, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `chat-history-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+
+                URL.revokeObjectURL(url);
+
+                alert(`✅ Histórico exportado!\n${conversations.length} conversas salvas.`);
+            } catch (err) {
+                alert('Erro ao exportar: ' + err.message);
+            }
+        }
+
+        function clearAllData() {
+            if (!confirm('⚠️ Isso vai deletar TODAS as conversas.\n\nDeseja continuar?')) {
+                return;
+            }
+
+            localStorage.removeItem(CONVERSATIONS_KEY);
+            localStorage.removeItem('claude_chat_history_v1');
+            localStorage.removeItem('viewing_conversation');
+
+            alert('✅ Todos os dados foram removidos!');
+            loadStats();
+        }
+
+        window.addEventListener('load', loadStats);
+    </script>
+</body>
+</html>

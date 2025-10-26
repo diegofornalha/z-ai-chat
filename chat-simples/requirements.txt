@@ -1,0 +1,7 @@
+# Dependências do Chat com ZAI SDK
+zai-sdk>=0.0.4
+python-dotenv>=1.0.0
+aiohttp>=3.9.0
+
+# Opcional (para desenvolvimento)
+black
