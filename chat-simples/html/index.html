@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Z.AI Chat - GLM-4.5-Flash (GRATUITO)</title>
+    <title>Z.AI Chat - GLM-4.6 (Flagship)</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +35,6 @@
                 <div class="toolbar-left">
                     <a id="history-link" class="toolbar-link" href="history.html" title="Ver histórico de conversas">📁 Histórico</a>
                     <button id="new-chat-btn" class="toolbar-link" style="border: none; background: none; cursor: pointer; color: inherit; font: inherit;" title="Iniciar novo chat">✨ Novo Chat</button>
-                    <a id="api-key-link" class="toolbar-link" href="api-keys.html" title="Gerenciar chaves API">🔑 Chaves</a>
                     <a class="toolbar-link" href="config.html" title="Ver uso e configurações">⚙️ Uso</a>
                 </div>
                 <div class="toolbar-right">
@@ -83,39 +82,5 @@
     <script src="../js/tool-indicator.js"></script>
     <script src="../js/shortcuts.js"></script>
     <script src="../js/app.js"></script>
-
-    <script>
-        // Atualiza o botão de chaves mostrando qual está ativa
-        function updateApiKeyIndicator() {
-            const apiKeyLink = document.getElementById('api-key-link');
-            if (!apiKeyLink) return;
-
-            const activeKeyId = localStorage.getItem('zai_active_key_id');
-            const keysData = localStorage.getItem('zai_api_keys');
-
-            if (keysData && activeKeyId) {
-                const keys = JSON.parse(keysData);
-                const activeKey = keys.find(k => k.id == activeKeyId);
-
-                if (activeKey) {
-                    const keyPreview = activeKey.key.substring(activeKey.key.length - 6);
-                    apiKeyLink.innerHTML = `🔑 Chaves <small style="opacity: 0.7; font-size: 0.85em;">(${activeKey.name})</small>`;
-                    apiKeyLink.title = `Chave ativa: ${activeKey.name} - ...${keyPreview}`;
-                } else {
-                    apiKeyLink.innerHTML = '🔑 Chaves <small style="opacity: 0.7;">(Padrão)</small>';
-                    apiKeyLink.title = 'Usando chave hardcoded do servidor';
-                }
-            } else {
-                apiKeyLink.innerHTML = '🔑 Chaves <small style="opacity: 0.7;">(Padrão)</small>';
-                apiKeyLink.title = 'Usando chave hardcoded do servidor';
-            }
-        }
-
-        // Atualiza ao carregar a página
-        document.addEventListener('DOMContentLoaded', updateApiKeyIndicator);
-
-        // Atualiza quando o localStorage muda (em outra aba/janela)
-        window.addEventListener('storage', updateApiKeyIndicator);
-    </script>
 </body>
 </html>

@@ -32,11 +32,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Modelo GRATUITO
-MODEL = "glm-4.5-flash"
+# Modelo FLAGSHIP (melhor qualidade)
+MODEL = "glm-4.6"
 
-# API Key hardcoded
-HARDCODED_API_KEY = "d19a7e6dfa8449deb00e6385ef83e961.8CUw7FYZuRLO1QHk"
+# API Key hardcoded (Chave 3 - testada e aprovada)
+HARDCODED_API_KEY = "a9cb3f9acbeb44a8aaab6f745628b579.pFM2lTNLjs4afUKB"
 
 # Cliente ZAI (será criado sob demanda)
 client = None
@@ -339,11 +339,11 @@ def main():
     port = 8080
 
     print("\n" + "=" * 60)
-    print("🆓 SERVIDOR DE CHAT COM GLM-4.5-Flash (GRATUITO)")
+    print("🚀 SERVIDOR DE CHAT COM GLM-4.6 (FLAGSHIP)")
     print("=" * 60)
     print(f"🌐 Servidor rodando em: http://localhost:{port}")
     print(f"💬 Chat disponível em: http://localhost:{port}/html/index.html")
-    print(f"🤖 Modelo: {MODEL} (100% GRATUITO)")
+    print(f"🤖 Modelo: {MODEL} (Flagship - Melhor Qualidade)")
     print("=" * 60)
     print("\nPressione Ctrl+C para parar o servidor\n")
 

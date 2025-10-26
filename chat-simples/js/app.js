@@ -336,7 +336,7 @@ class ClaudeChatApp {
 
             case 'message_start':
                 // Início da resposta do assistente
-                window.debugVisual?.log('info', `🤖 Modelo: ${data.message?.model || 'GLM-4.5-Flash'}`);
+                window.debugVisual?.log('info', `🤖 Modelo: ${data.message?.model || 'GLM-4.6'}`);
                 break;
 
             case 'content_block_delta':
@@ -591,7 +591,7 @@ class ClaudeChatApp {
         if (role === 'user') {
             title.textContent = '👤 Você';
         } else if (role === 'assistant') {
-            title.textContent = '🤖 GLM-4.5-Flash';
+            title.textContent = '🤖 GLM-4.6';
         } else {
             title.textContent = 'ℹ️ Sistema';
         }
@@ -890,7 +890,7 @@ class ClaudeChatApp {
 
         // Retorna configurações padrão se não existir
         return {
-            model: 'glm-4.5-flash',
+            model: 'glm-4.6',
             temperature: 0.7,
             maxTokens: 2000,
             webSearchEnabled: false,
