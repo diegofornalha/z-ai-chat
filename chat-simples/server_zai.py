@@ -35,8 +35,11 @@ logger = logging.getLogger(__name__)
 # Modelo GRATUITO
 MODEL = "glm-4.5-flash"
 
-# Cliente ZAI
-client = ZaiClient()
+# API Key hardcoded
+HARDCODED_API_KEY = "d19a7e6dfa8449deb00e6385ef83e961.8CUw7FYZuRLO1QHk"
+
+# Cliente ZAI (será criado sob demanda)
+client = None
 
 # Armazena conversações ativas
 active_conversations: Dict[str, List[Dict]] = {}
@@ -110,7 +113,8 @@ class ChatHandler:
                     'maxTokens': 2000,
                     'webSearchEnabled': False,
                     'roleplayEnabled': False,
-                    'roleplay': {}
+                    'roleplay': {},
+                    'apiKey': None
                 }
 
             model = config.get('model', MODEL)
@@ -119,6 +123,7 @@ class ChatHandler:
             web_search_enabled = config.get('webSearchEnabled', False)
             roleplay_enabled = config.get('roleplayEnabled', False)
             roleplay_config = config.get('roleplay', {})
+            custom_api_key = config.get('apiKey', None)
 
             # Adiciona mensagem do usuário ao histórico
             self.messages.append({
@@ -165,7 +170,22 @@ class ChatHandler:
                 }
                 logger.info(f"🎭 Role-play habilitado: {roleplay_config.get('botName')}")
 
-            stream = client.chat.completions.create(**api_params)
+            # Usa a chave customizada, ou a hardcoded, ou a do .env (nessa ordem de prioridade)
+            if custom_api_key:
+                api_key_to_use = custom_api_key
+                logger.info(f"🔑 Usando API key customizada: {api_key_to_use[:20]}...")
+            elif HARDCODED_API_KEY:
+                api_key_to_use = HARDCODED_API_KEY
+                logger.info(f"🔑 Usando API key hardcoded: {api_key_to_use[:20]}...")
+            else:
+                api_key_to_use = os.getenv('ZAI_API_KEY')
+                if not api_key_to_use:
+                    raise Exception("Nenhuma chave API configurada. Configure no código ou no .env")
+                logger.info(f"🔑 Usando API key do .env: {api_key_to_use[:20]}...")
+
+            # Cria cliente com a chave
+            temp_client = ZaiClient(api_key=api_key_to_use)
+            stream = temp_client.chat.completions.create(**api_params)
 
             # Processa stream
             for chunk in stream:

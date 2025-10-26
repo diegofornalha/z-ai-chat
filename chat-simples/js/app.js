@@ -377,6 +377,19 @@ class ClaudeChatApp {
         // Carrega configurações avançadas do localStorage
         const config = this.loadAdvancedConfig();
 
+        // Adiciona chave API ativa se configurada
+        const activeKeyId = localStorage.getItem('zai_active_key_id');
+        if (activeKeyId) {
+            const keysData = localStorage.getItem('zai_api_keys');
+            if (keysData) {
+                const keys = JSON.parse(keysData);
+                const activeKey = keys.find(k => k.id == activeKeyId);
+                if (activeKey) {
+                    config.apiKey = activeKey.key;
+                }
+            }
+        }
+
         const payload = {
             action: 'send_message',
             message,
